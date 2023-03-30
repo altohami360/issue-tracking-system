@@ -76,8 +76,6 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        $ticket->open();
-
         $ticket = $ticket->load(['labels', 'categories']);
 
         $messages = Message::where('ticket_id', '=', $ticket->id)->get();

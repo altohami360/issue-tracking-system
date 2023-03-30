@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
 
         Route::patch('{ticket}/close', 'close')->name('tickets.close');
 
-        Route::patch('{ticket}/reopen', 'reopen')->name('tickets.reopen');
+        Route::patch('{ticket}/open', 'open')->name('tickets.reopen');
 
         Route::patch('{ticket}/archive', 'archive')->name('tickets.archive');
 

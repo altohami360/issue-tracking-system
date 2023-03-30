@@ -13,7 +13,7 @@ trait Searchable
     /**
      * @throws Exception
      */
-    public function scopeSearch(Builder $builder, $term = ''): Model
+    public function scopeSearch(Builder $builder, $term = '')
     {
         if (!$this->searchable) {
             throw new Exception('Please define searchable array');
@@ -34,7 +34,5 @@ trait Searchable
 
             $builder->orWhere($searchable, 'like', "%$term%");
         }
-
-        return $this;
     }
 }

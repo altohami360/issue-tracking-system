@@ -43,17 +43,27 @@
                             @endforeach
                         </p>
                         <div>
-                            @if (!$ticket->resolved && !$ticket->isArchive)
+                            @if (!$ticket->resolved)
                                 <form action="{{ route('tickets.solve', $ticket) }}" method="POST" class="inline">
                                     @csrf
                                     @method('PATCH')
                                     <button type="submit"
-                                        class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 text-center">
+                                            class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 text-center">
                                         Solved
                                     </button>
                                 </form>
                             @endif
-                            @if (!$ticket->isClose && !$ticket->isArchive)
+                            @if ($ticket->isNew)
+                                <form action="{{ route('tickets.reopen', $ticket) }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit"
+                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 text-center">
+                                        Open
+                                    </button>
+                                </form>
+                            @endif
+                            @if (!$ticket->isClose && $ticket->isOpen)
                                 <form action="{{ route('tickets.close', $ticket) }}" method="POST" class="inline">
                                     @csrf
                                     @method('PATCH')
@@ -63,7 +73,7 @@
                                     </button>
                                 </form>
                             @endif
-                            @if ($ticket->isClose && !$ticket->isArchive)
+                            @if ($ticket->isClose)
                                 <form action="{{ route('tickets.reopen', $ticket) }}" method="POST" class="inline">
                                     @csrf
                                     @method('PATCH')
@@ -84,7 +94,7 @@
                                 </form>
                             @endif
                             @if ($ticket->isArchive)
-                                <form action="{{ route('tickets.unarchive', $ticket) }}" method="POST" class="inline">
+                                <form action="{{ route('tickets.unarchived', $ticket) }}" method="POST" class="inline">
                                     @csrf
                                     @method('PATCH')
                                     <button type="submit"
@@ -108,30 +118,15 @@
 
             </div>
 
-            <div class="relative border border-1 border-gray-200 rounded p-4 bg-white mb-4">
-                <div class="mb-6 grid justify-items-stretch overflow-auto h-96 border border-gray-300">
+            <div class="relative border border-1 border-gray-200 rounded py-4 px-8 bg-white mb-4 space-y-6">
+                <div class="w-full flex justify-center"><h3 class="text-xl mx-auto">Messages</h3></div>
+                <div class="space-y-4">
                     @foreach ($messages as $message)
-                        @if (is_null($message->sender_id))
-                            <div class="justify-self-end grid justify-items-end text-white w-1/2">
-                                <div class="bg-blue-600 px-4 py-2 mx-4 mt-2 rounded-t-xl  rounded-l-xl">
-                                    {{ $message->content }}
+                                <div class="px-4 py-2 border border-md rounded-md">
+                                    <div class="text-sm text-gray-400 my-2">{{ $message->user->name }}</div>
+                                    <div class="text-md">message : {{ $message->content }}</div>
+                                    <div class="text-sm text-gray-400 my-2">{{ $message->create_at_diff_humans }}</div>
                                 </div>
-                                <span
-                                    class=" py-2 px-4 my-1 mx-4 bg-blue-600 block w-fit h-fit rounded-b-full rounded-tl-full">
-                                    admin
-                                </span>
-                            </div>
-                        @else
-                            <div class="justify-self-start grid justify-items-start w-1/2 text-white">
-                                <div class="bg-gray-600 px-4 py-2 mx-4 mt-2 rounded-t-xl  rounded-r-xl">
-                                    {{ $message->content }}
-                                </div>
-                                <span
-                                    class=" py-2 px-4 my-1 mx-4 bg-gray-600 block w-fit h-fit rounded-b-full rounded-tr-full">
-                                    U
-                                </span>
-                            </div>
-                        @endif
                     @endforeach
                 </div>
                 <form action="{{ route('messages.send') }}" method="post">

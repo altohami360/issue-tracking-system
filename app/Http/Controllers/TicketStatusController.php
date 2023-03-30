@@ -14,9 +14,9 @@ class TicketStatusController extends Controller
         return redirect()->back()->with('success', 'success');;
     }
 
-    public function reopen(Ticket $ticket)
+    public function open(Ticket $ticket)
     {
-        $ticket->reopen();
+        $ticket->open();
 
         return redirect()->back()->with('success', 'success');;
     }

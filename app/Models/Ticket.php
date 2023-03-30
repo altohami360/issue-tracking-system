@@ -53,7 +53,7 @@ class Ticket extends Model
     public function createAtDiffHumans(): Attribute
     {
         return Attribute::make(
-            get: fn($value, $attribute) => $attribute['created_at']->diffForHumans()
+            get: fn() => $this->created_at->diffForHumans()
         );
     }
 

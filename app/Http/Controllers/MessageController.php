@@ -8,15 +8,12 @@ use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
-    public function send(MessageRequest $request)
+    public function send(Request $request)
     {
-        $validated = $request->validated();
-
-        Message::create([
-            'sender_id' => auth()->id(),
+        $message = Message::create([
             'user_id' => auth()->id(),
-            'ticket_id' => $validated->ticket_id,
-            'content' => $validated->content
+            'content' => $request->content,
+            'ticket_id' => $request->ticket_id,
         ]);
 
 
