@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
+class Category extends Model
+{
+    use HasFactory;
+
+    protected $fillable = ['name'];
+
+    public function tickets(): BelongsToMany
+    {
+        return $this->belongsToMany(Ticket::class);
+    }
+
+    public static function scopeCategoriesInTicketChecked($ticket_categories): object
+    {
+
+        return $categories = self::all();
+
+        // return ($ticket_categories->get());
+        // // return $categories->diff($ticket_categories);
+
+        // // $categories->each(fn ($category) => $category['checked'] = true);
+
+        // // return $categories;
+    }
+}
