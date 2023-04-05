@@ -46,11 +46,4 @@ trait Searchable
         }
     }
 
-    public function scopeCon(Builder $builder, $array = [''])
-    {
-//        ('ticket_id', '=', $ticket->id)->get();
-//        foreach ($array as $item) {
-            $builder->where('id', '=', 18);
-//        }
-    }
 }

@@ -86,7 +86,6 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-//        dd(auth()->user()->role->value , $ticket->role);
         if (auth()->user()->role != $ticket->role && auth()->user()->role != UserRole::ADMIN) {
 
             abort(403);
