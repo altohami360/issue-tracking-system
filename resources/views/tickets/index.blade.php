@@ -10,19 +10,19 @@
             <div class="grid grid-cols-4 gap-4 mb-4">
                 <div class="w-full p-4 border border-1 border-gray-200 rounded bg-white">
                     <p class="font-medium">Total Tickets</p>
-                    <span>12</span>
+                    <span>{{ $counts['tickets_count'] }}</span>
                 </div>
                 <div class="w-full p-4 border border-1 border-gray-200 rounded bg-white">
-                    <p class="font-medium">Resolved Ticket</p>
-                    <span>12</span>
+                    <p class="font-medium">Resolved Tickets</p>
+                    <span>{{ $counts['resolved_tickets'] }}</span>
                 </div>
                 <div class="w-full p-4 border border-1 border-gray-200 rounded bg-white">
-                    <p class="font-medium">Opened Ticket</p>
-                    <span>12</span>
+                    <p class="font-medium">Closed Tickets</p>
+                    <span>{{ $counts['closed_tickets'] }}</span>
                 </div>
                 <div class="w-full p-4 border border-1 border-gray-200 rounded bg-white">
-                    <p class="font-medium">Total User</p>
-                    <span>12</span>
+                    <p class="font-medium">New Tickets</p>
+                    <span>{{ $counts['new_tickets'] }}</span>
                 </div>
             </div>
             <div class="relative overflow-x-auto border border-1 border-gray-200 rounded p-4 bg-white mb-4">

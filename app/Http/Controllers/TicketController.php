@@ -25,16 +25,26 @@ class TicketController extends Controller
     {
         $term = $request->term ?? null;
 
+        $ticket = Ticket::all();
+
+        $counts = collect([
+            'tickets_count' => $ticket->count(),
+            'resolved_tickets' => $ticket->where('resolved', '=', true)->count(),
+            'closed_tickets' => $ticket->where('status', '=', TicketStatus::CLOSED)->count(),
+            'new_tickets' => $ticket->where('status', '=', TicketStatus::NEW)->count(),
+        ]);
+
         $status = TicketStatus::cases();
 
         $priority = Priority::cases();
 
         $tickets = Ticket::with(['labels', 'categories', 'user'])
             ->search($term)
+            ->role()
             ->latest()
             ->paginate(10);
 
-        return view('tickets.index', compact('tickets', 'status', 'priority', 'term'));
+        return view('tickets.index', compact('tickets', 'status', 'priority', 'term', 'counts'));
     }
 
     /**
@@ -76,9 +86,15 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        $ticket = $ticket->load(['labels', 'categories']);
+//        dd(auth()->user()->role->value , $ticket->role);
+        if (auth()->user()->role != $ticket->role && auth()->user()->role != UserRole::ADMIN) {
+
+            abort(403);
+        }
 
         $messages = Message::where('ticket_id', '=', $ticket->id)->get();
+
+        $ticket = $ticket->load(['labels', 'categories']);
 
         return view('tickets.show', compact('ticket', 'messages'));
     }

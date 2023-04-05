@@ -68,7 +68,7 @@
                                     @csrf
                                     @method('PATCH')
                                     <button type="submit"
-                                        class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center">
+                                            class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center">
                                         Close
                                     </button>
                                 </form>
@@ -78,7 +78,7 @@
                                     @csrf
                                     @method('PATCH')
                                     <button type="submit"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                         Reopen
                                     </button>
                                 </form>
@@ -88,7 +88,7 @@
                                     @csrf
                                     @method('PATCH')
                                     <button type="submit"
-                                        class="text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">
+                                            class="text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">
                                         Archive
                                     </button>
                                 </form>
@@ -98,7 +98,7 @@
                                     @csrf
                                     @method('PATCH')
                                     <button type="submit"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                         Un Archive
                                     </button>
                                 </form>
@@ -108,11 +108,7 @@
                 </div>
 
                 <div class=" p-4 mb-6 space-y-4">
-
-
-
                     <h2 class="text-xl">{{ $ticket->title }}</h2>
-
                     <p>{{ $ticket->description }}</p>
                 </div>
 
@@ -122,11 +118,19 @@
                 <div class="w-full flex justify-center"><h3 class="text-xl mx-auto">Messages</h3></div>
                 <div class="space-y-4">
                     @foreach ($messages as $message)
-                                <div class="px-4 py-2 border border-md rounded-md">
-                                    <div class="text-sm text-gray-400 my-2">{{ $message->user->name }}</div>
-                                    <div class="text-md">message : {{ $message->content }}</div>
-                                    <div class="text-sm text-gray-400 my-2">{{ $message->create_at_diff_humans }}</div>
-                                </div>
+                        @if($message->user->id == auth()->user()->id)
+                            <div class="px-4 py-2 border border-md rounded-md bg-blue-700">
+                                <div class="text-sm text-gray-400 my-2">{{ $message->user->name }}</div>
+                                <div class="text-md text-white">message : {{ $message->content }}</div>
+                                <div class="text-sm text-gray-400 my-2">{{ $message->create_at_diff_humans }}</div>
+                            </div>
+                        @else
+                            <div class="px-4 py-2 border border-md rounded-md">
+                                <div class="text-sm text-gray-400 my-2">{{ $message->user->name }}</div>
+                                <div class="text-md">message : {{ $message->content }}</div>
+                                <div class="text-sm text-gray-400 my-2">{{ $message->create_at_diff_humans }}</div>
+                            </div>
+                        @endif
                     @endforeach
                 </div>
                 <form action="{{ route('messages.send') }}" method="post">
@@ -136,10 +140,10 @@
                         <label for="D" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
                             Message</label>
                         <textarea id="D" rows="4" name="content"
-                            class="block p-2.5 w-1/2 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                                  class="block p-2.5 w-1/2 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"></textarea>
                     </div>
                     <button type="submit"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                         Send
                     </button>
                 </form>

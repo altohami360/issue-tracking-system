@@ -2,9 +2,9 @@
 
 namespace App\Traits;
 
+use App\Enums\UserRole;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 trait Searchable
@@ -34,5 +34,23 @@ trait Searchable
 
             $builder->orWhere($searchable, 'like', "%$term%");
         }
+
+    }
+
+    public function scopeRole(Builder $builder)
+    {
+
+        if (auth()->user()->role->value != UserRole::ADMIN->value) {
+
+            $builder->where('role', '=', auth()->user()->role);
+        }
+    }
+
+    public function scopeCon(Builder $builder, $array = [''])
+    {
+//        ('ticket_id', '=', $ticket->id)->get();
+//        foreach ($array as $item) {
+            $builder->where('id', '=', 18);
+//        }
     }
 }
