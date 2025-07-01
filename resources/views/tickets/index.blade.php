@@ -108,7 +108,7 @@
                                     </span>
                                 </th>
                                 <th scope="row" class="px-6 py-4">
-                                    {{ $ticket->create_at_diff_humans }}
+                                    {{ $ticket->created_at->diffForHumans() }}
                                 </th>
                                 <td class="px-6 py-4 space-x-1">
 
